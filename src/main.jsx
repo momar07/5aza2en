@@ -5,10 +5,18 @@ import App from "./App";
 import "./styles/globals.css";
 import "./i18n/index";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );
+
+// ✅ أخفِ الـ inline loader فور ما React يكمل أول render
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    if (typeof window.__hideInlineLoader === "function") {
+      window.__hideInlineLoader();
+    }
+  });
+});
