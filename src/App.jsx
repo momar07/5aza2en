@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { HelmetProvider }  from "react-helmet-async";
 import { Toaster }         from "react-hot-toast";
 import { AnimatePresence } from "framer-motion";
 import { AppProvider, useApp } from "./context/AppContext";
 import SEOHelmet        from "./components/SEO/SEOHelmet";
-import Loader           from "./components/UI/Loader";
 import CustomCursor     from "./components/UI/CustomCursor";
 import ScrollProgress   from "./components/UI/ScrollProgress";
 import Home             from "./pages/Home";
@@ -29,7 +28,20 @@ function AppRoutes() {
   const { loading } = useApp();
   const location    = useLocation();
 
-  if (loading) return <Loader />;
+  // ✅ لما loading يخلص — نخفي inline-loader مرة واحدة بس
+  useEffect(() => {
+    if (!loading) {
+      const el = document.getElementById("inline-loader");
+      if (el) {
+        el.style.transition = "opacity 0.5s ease";
+        el.style.opacity    = "0";
+        setTimeout(() => el.remove(), 520);
+      }
+    }
+  }, [loading]);
+
+  // لما loading شغال — inline-loader شايل الشاشة، مش محتاج Loader component
+  if (loading) return null;
 
   return (
     <>
@@ -50,17 +62,17 @@ function AppRoutes() {
       />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          <Route path="/"         element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/about"    element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact"  element={<Contact />} />
-          <Route path="/login"    element={<Login />} />
+          <Route path="/"          element={<Home />} />
+          <Route path="/products"  element={<Products />} />
+          <Route path="/about"     element={<About />} />
+          <Route path="/services"  element={<Services />} />
+          <Route path="/contact"   element={<Contact />} />
+          <Route path="/login"     element={<Login />} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-            <Route index                element={<Overview />} />
-            <Route path="products"      element={<ManageProducts />} />
-            <Route path="ads"           element={<ManageAds />} />
-            <Route path="settings"      element={<Settings />} />
+            <Route index           element={<Overview />} />
+            <Route path="products" element={<ManageProducts />} />
+            <Route path="ads"      element={<ManageAds />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
