@@ -26,9 +26,14 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-24">
             <AnimatedSection direction="right">
               <div className="relative">
-                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700"
-                  alt="about" className="rounded-3xl w-full h-80 object-cover shadow-gold-lg"
-                  style={{ border:"1px solid rgba(200,151,58,0.2)" }}/>
+                <img
+                  src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700"
+                  alt={lang==="ar" ? "خبراء الخزائن - خزائن فاخرة منذ 2010" : "Khobara Khazaen - Luxury cabinets since 2010"}
+                  loading="lazy"
+                  width="700" height="480"
+                  className="rounded-3xl w-full h-80 object-cover shadow-gold-lg"
+                  style={{ border:"1px solid rgba(200,151,58,0.2)" }}
+                />
                 <div className="absolute -bottom-5 -left-5 w-24 h-24 rounded-2xl gold-gradient flex items-center justify-center shadow-gold-md">
                   <div className="text-center">
                     <div className="text-black font-black text-2xl leading-none">14</div>
@@ -102,13 +107,14 @@ export default function About() {
               { name:t("about.branch2"), addr:t("about.branch2Addr") },
             ].map((b,i) => (
               <AnimatedSection key={i} delay={i*0.15} direction="up">
-                <div className="card-dark p-6 rounded-2xl flex items-start gap-4">
+                <div className="card-dark p-6 rounded-2xl flex items-start gap-4"
+                  itemScope itemType="https://schema.org/LocalBusiness">
                   <div className="w-12 h-12 rounded-xl gold-gradient flex items-center justify-center flex-shrink-0 shadow-gold-sm">
                     <MapPin size={20} className="text-black"/>
                   </div>
                   <div>
-                    <h4 className="font-black text-white text-lg mb-1">{b.name}</h4>
-                    <p className="text-gray-400 text-sm">{b.addr}</p>
+                    <h4 className="font-black text-white text-lg mb-1" itemProp="name">{b.name}</h4>
+                    <p className="text-gray-400 text-sm" itemProp="address">{b.addr}</p>
                   </div>
                 </div>
               </AnimatedSection>

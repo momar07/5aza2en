@@ -50,9 +50,13 @@ export default function Products() {
                   <div className="relative rounded-2xl overflow-hidden group cursor-pointer hover-lift"
                     style={{ border:"1px solid rgba(200,151,58,0.1)" }}
                     onClick={() => setSelected(p)}>
-                    <img src={p.img} alt={lang==="ar"?p.titleAr:p.titleEn}
+                    <img
+                      src={p.img}
+                      alt={lang==="ar" ? `${p.titleAr} — خزائن فاخرة` : `${p.titleEn} — Luxury Cabinets`}
+                      loading="lazy"
                       className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      style={{ height:i%3===0?"300px":i%3===1?"230px":"260px" }}/>
+                      style={{ height:i%3===0?"300px":i%3===1?"230px":"260px" }}
+                    />
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
                       style={{ background:"rgba(0,0,0,0.6)" }}>
                       <div className="w-12 h-12 rounded-full flex items-center justify-center"
@@ -85,7 +89,12 @@ export default function Products() {
               className="relative max-w-2xl w-full rounded-3xl overflow-hidden"
               style={{ border:"1px solid rgba(200,151,58,0.3)", background:"var(--dark-200)" }}
               onClick={e => e.stopPropagation()}>
-              <img src={selected.img} alt="" className="w-full h-80 object-cover"/>
+              <img
+                src={selected.img}
+                alt={lang==="ar" ? selected.titleAr : selected.titleEn}
+                loading="lazy"
+                className="w-full h-80 object-cover"
+              />
               <div className="p-6">
                 <h2 className="text-2xl font-black text-white mb-2">{lang==="ar"?selected.titleAr:selected.titleEn}</h2>
                 <span className="tag-gold">{t(`products.${selected.category}`)}</span>

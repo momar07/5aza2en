@@ -14,12 +14,13 @@ import "swiper/css/navigation";
 import PageLayout from "../components/Layout/PageLayout";
 import AnimatedSection from "../components/UI/AnimatedSection";
 import SectionHeader from "../components/UI/SectionHeader";
+import SEOHelmet from "../components/SEO/SEOHelmet";
 import { ArrowLeft, ArrowRight, ChevronDown, Star, Shield, Truck, Wrench, MessageCircle } from "lucide-react";
 
 const HERO = [
-  { img:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600", tagAr:"مجموعة بريميوم", tagEn:"Premium Collection" },
-  { img:"https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=1600", tagAr:"تصاميم حصرية",   tagEn:"Exclusive Designs"   },
-  { img:"https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=1600", tagAr:"صنع بالشغف",     tagEn:"Made with Passion"   },
+  { img:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600", tagAr:"مجموعة بريميوم", tagEn:"Premium Collection", altAr:"خزانة فاخرة من مجموعة بريميوم", altEn:"Luxury wardrobe from premium collection" },
+  { img:"https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=1600", tagAr:"تصاميم حصرية",   tagEn:"Exclusive Designs",   altAr:"تصاميم حصرية من خبراء الخزائن", altEn:"Exclusive designs from Khobara Khazaen" },
+  { img:"https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=1600", tagAr:"صنع بالشغف",     tagEn:"Made with Passion",   altAr:"خزائن مصنوعة بالشغف والحرفية", altEn:"Cabinets made with passion and craftsmanship" },
 ];
 
 function StatCard({ num, suffix="", label, delay=0 }) {
@@ -71,7 +72,13 @@ export default function Home() {
             {HERO.map((slide, i) => (
               <SwiperSlide key={i}>
                 <div className="relative h-full">
-                  <img src={slide.img} alt="" className="w-full h-full object-cover scale-105" />
+                  <img
+                    src={slide.img}
+                    alt={lang === "ar" ? slide.altAr : slide.altEn}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    width="1600" height="900"
+                    className="w-full h-full object-cover scale-105"
+                  />
                   <div className="absolute inset-0" style={{ background:"linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.85))" }}/>
                 </div>
               </SwiperSlide>
@@ -173,7 +180,12 @@ export default function Home() {
                     <div className="relative rounded-3xl overflow-hidden group cursor-pointer hover-lift"
                       style={{ border:"1px solid rgba(200,151,58,0.15)" }}>
                       <div className="relative h-56 overflow-hidden">
-                        <img src={ad.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+                        <img
+                          src={ad.img}
+                          alt={lang==="ar" ? ad.titleAr : ad.titleEn}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
                         <div className="absolute inset-0" style={{ background:"linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.3) 60%,transparent 100%)" }}/>
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 p-5">
@@ -202,7 +214,8 @@ export default function Home() {
                   style={{ border:"1px solid rgba(200,151,58,0.1)" }}>
                   <img
                     src={p.img}
-                    alt={lang==="ar"?p.titleAr:p.titleEn}
+                    alt={lang==="ar" ? `${p.titleAr} — خبراء الخزائن` : `${p.titleEn} — Khobara Khazaen`}
+                    loading="lazy"
                     className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     style={{ height: i%4===0?"320px":i%4===1?"240px":i%4===2?"280px":"200px" }}
                   />
