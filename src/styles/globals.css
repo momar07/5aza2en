@@ -410,3 +410,15 @@
   padding: 0.875rem 1rem;
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
 }
+
+
+/* ══ Heroes Responsive Fixes ══ */
+@media (max-width: 768px) {
+  .container[style*="grid-template-columns: 1fr 1."] {
+    grid-template-columns: 1fr !important;
+  }
+  .container[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
